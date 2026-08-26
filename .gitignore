@@ -1,0 +1,22 @@
+/build/
+/.venv/
+/*.log
+/*.jou
+
+# Vivado artifacts (project rebuilt via flow/*.tcl scripts, not committed)
+/.Xil/
+/vivado/
+/usage_statistics_webtalk.html
+/usage_statistics_webtalk.xml
+/vivado*.backup.jou
+/webtalk*.backup.jou
+/*.backup.log
+flow/*.bak*
+/*.bak*
+
+# OS / editor
+Thumbs.db
+*.swp
+__pycache__/
+*.pyc
+/tight_setup_hold_pins.txt

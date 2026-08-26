@@ -1,0 +1,11 @@
+# Normalize text files to LF line endings; do not convert binary files
+* text=auto eol=lf
+
+# Binary
+*.exe binary
+*.bit binary
+*.bin binary
+*.elf binary
+*.dcp binary
+*.pdf binary
+*.png binary

@@ -1,0 +1,89 @@
+# NOTICE — Third-party components and licenses
+
+This repository contains third-party code. The components, their upstream
+sources, and applicable license terms are listed below. The project's own
+code is licensed under the MIT License (see `LICENSE`).
+
+## 1. Ibex RV32IMC CPU core — `rtl/ibex/`
+
+- Upstream: lowRISC Ibex, https://github.com/lowRISC/ibex
+- License: Apache License 2.0. The full license text is provided in
+  `LICENSE.Apache-2.0` as required by Apache-2.0 §4(a).
+- Local modifications: the vendored copy keeps only the modules actually
+  synthesized (no icache / lockstep / full PMP / tracer / latch register
+  file); `prim_*.sv` and `dv_fcov_macros.svh` are minimal stubs without SVA
+  dependencies. Individual file headers retain the upstream copyright and
+  license notices.
+
+## 2. SLotH — SHA-256 round unit, UART, RAM
+
+- Upstream: SLotH (SLH-DSA hardware), by Markku-Juhani O. Saarinen,
+  https://github.com/slh-dsa/sloth
+- Affected files: `rtl/lms_sha256_round.v` (adapted from
+  `rtl/sha256_round.v`), `rtl/uart_tx.v`, `rtl/uart_rx.v` (copied),
+  `rtl/lms_fpga_ram.v` (adapted dual-port RAM).
+- License: BSD 3-Clause. The license text is reproduced in
+  `rtl/LICENSE.sloth` (see also `rtl/README.md`).
+
+## 3. neoTRNG — TRNG entropy source — `rtl/lms_trng.v`
+
+- Upstream: neoTRNG v3.3, https://github.com/stnolting/neoTRNG
+- Affected file: `rtl/lms_trng.v` (architecture ported from neoTRNG v3.3,
+  rewritten in Verilog with SP 800-90B section 4.4 style online health
+  checks/APT).
+- License: BSD 3-Clause, Copyright (c) 2025, Stephan Nolting. The file
+  header retains the upstream copyright notice and complies with its terms
+  (retain copyright/license text, no endorsement).
+
+## 4. NewAE CW305 register frontend — `rtl/lms_cw305_usb_uart.v`
+
+- Upstream: ChipWhisperer CW305 reference design, NewAE Technology Inc.
+- Affected module: `cw305_usb_reg_fe` within `rtl/lms_cw305_usb_uart.v`
+  (verbatim copy of the NewAE official register frontend for the CW305 USB
+  interface).
+- License: BSD 3-Clause, Copyright (c) 2020, NewAE Technology Inc. The module
+  header retains the upstream copyright and license notice.
+
+## 5. XKCP — Keccak permutation — `hashs/xkcp/`
+
+- Upstream: XKCP (eXtended Keccak Code Package),
+  https://github.com/XKCP/XKCP
+- Affected files: `KeccakP-1600-inplace32BI.c`, `KeccakP-1600-SnP.h`,
+  `SnP-Relaned.h`, `brg_endian.h` (the last carries Brian Gladman's public
+  domain notice).
+- License: public domain / CC0 (KeccakP-1600 sources); see the upstream
+  XKCP distribution for per-file terms. `xkcp_shake.c/.h`, `load-store.h`
+  and `SnP-common.h` are project-local minimal adapters.
+- NOTE: the filename `SnP-Relaned.h` preserves the upstream spelling
+  ("re-lane-d").
+
+## 6. Haraka v2 — `hashs/haraka.c/.h`
+
+- Upstream: SPHINCS+ reference implementation (haraka.c/haraka.h),
+  https://github.com/sphincs/sphincsplus
+- License: public domain (CC0), per the SPHINCS+ distribution.
+- Local copy matches the upstream reference implementation; LMS uses
+  only `haraka_S` (sponge).
+
+## 7. FIPS202 / SHAKE — `hashs/fips202.c/.h`
+
+- Upstream: PQClean / pq-crystals-style FIPS202 reference (shake256).
+- License: public domain (CC0), per the pq-crystals distribution.
+- Local copy matches the upstream reference implementation; LMS uses
+  only `shake256`.
+
+## 8. Mbed TLS — external benchmark dependency (`bench/`)
+
+- Upstream: Mbed TLS, https://github.com/Mbed-TLS/mbedtls (tag v2.28.9)
+- Role: external build dependency for the classical-algorithm benchmarks
+  (RSA-2048 / ECDSA P-256) used as the same-platform comparison baseline in
+  the paper. Mbed TLS is dual-licensed Apache-2.0 OR GPL-2.0-or-later; this
+  project adopts it under the Apache License 2.0. It is not vendored in this
+  distribution: point `MBEDTLS_DIR` at a local mbedtls-2.28.9 checkout to
+  build the `bench-native` / `bench-fw` targets.
+- The project-local bench glue (`bench/`, `fw/lms_bench.c`) is MIT.
+
+## 9. Xilinx/AMD Vivado artifacts
+
+Generated build outputs under `build/`, `.Xil/`, `vivado*/` are tool
+artifacts and are not distributed under this notice.
